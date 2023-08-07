@@ -43,6 +43,10 @@ Source code for the portfolio page can be found here: [JavaScript](https://githu
 
 
 
+https://github.com/IVignollesJeong/ORM-e-commerce-back-end/assets/131202032/6afbb01f-fd61-4c3b-bfca-b66d6725600f
+
+
+
 ## Credits
 
 [mysql2 NPM package](https://www.npmjs.com/package/mysql2) </br>
