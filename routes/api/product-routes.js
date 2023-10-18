@@ -30,7 +30,7 @@ router.get('/:id', async (req, res) => {
       include: [{ model: Category }, { model: Tag }]
     });
     if (!product) {
-      res.status(404).json({ message: 'no product find!' });
+      res.status(404).json({ message: 'Product does not exist!' });
     } else {
       res.status(200).json(product);
     }
@@ -83,7 +83,7 @@ router.put('/:id', async (req, res) => {
     const { product_name, price, stock, tagIds } = req.body;
 
     if (!product_name && !price && !stock && !tagIds) {
-      return res.status(400).json({ message: 'No data provided for update!' });
+      return res.status(400).json({ message: 'Update information not found!' });
     }
 
     const product = await Product.findByPk(req.params.id);
@@ -118,20 +118,20 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
-  // delete one product by its `id` value
-  try {
-    // delete one product by its `id` value
-    const product = await Product.findByPk(req.params.id);
-    if (!product) {
-      res.status(404).json({ message: 'no product find!' });
-    } else {
-      await product.destroy();
-      res.status(200).json({ message: 'delted product!' });
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
+
+// Delete route for a book with a matching isbn
+router.delete('/:id', (req, res) => {
+  // Looks for the books based on isbn given in the request parameters and deletes the instance from the database
+  Product.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((deletedId) => {
+      res.json(deletedId);
+      console.log(`Deleted id #${deletedId}!`);
+    })
+    .catch((err) => res.json(err));
 });
 
 module.exports = router;
